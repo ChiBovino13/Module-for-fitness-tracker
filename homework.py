@@ -1,5 +1,5 @@
-import math
 from typing import Dict, Type, Union
+
 
 class InfoMessage:
     """Информационное сообщение о тренировке."""
@@ -16,8 +16,6 @@ class InfoMessage:
         self.speed = speed
         self.calories = calories
 
-    
-     
     def get_message(self) -> str:
         """Вывод на экран сообщения о пройденной тренировке."""
         messege: Union[str, float] =  (f'Тип тренировки: {self.training_type}; '
@@ -26,7 +24,6 @@ class InfoMessage:
                                       f'Ср. скорость: {self.speed:.3f} км/ч; '
                                       f'Потрачено ккал: {self.calories:.3f}.')
         return messege
-
 
 class Training:
     """Базовый класс тренировки."""
@@ -37,13 +34,12 @@ class Training:
     def __init__(self,
                  action: int,
                  duration: float,
-                 weight: float                 
+                 weight: float      
                  ) -> None:
         self.action = action
         self.duration = duration
         self.weight = weight
-             
-               
+
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
         distance_km = self.action * self.LEN_STEP / self.M_IN_KM
@@ -63,20 +59,19 @@ class Training:
         """Вернуть информационное сообщение о выполненной тренировке."""
         return InfoMessage(self.__class__.__name__, self.duration, 
                            self.get_distance(), self.get_mean_speed(), self.get_spent_calories())
-        
 
 class Running(Training):
     """Тренировка: бег."""
-    
+
     def __init__(self,
                  action: int,
                  duration: float,
-                 weight: float,                 
+                 weight: float              
                  ) -> None:
         self.action = action
         self.duration = duration
         self.weight = weight
-        
+
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         coeff_calorie_1 = 18
@@ -93,13 +88,13 @@ class SportsWalking(Training):
                  action: int,
                  duration: float,
                  weight: float,
-                 height: float                 
+                 height: float             
                  ) -> None:
         self.action = action
         self.duration = duration
         self.weight = weight
         self.height = height
-       
+
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         coeff_calorie_1 = 0.035
@@ -109,16 +104,15 @@ class SportsWalking(Training):
                     // self.height) * coeff_calorie_2 * self.weight) * duration_min)
         return calories
 
-
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP = 1.38
-    
+
     def __init__(self,
                  action: int,
                  duration: float,
                  weight: float,
-                 length_pool: float, 
+                 length_pool: float,
                  count_pool: float
                  ) -> None:
         self.action = action
@@ -126,7 +120,7 @@ class Swimming(Training):
         self.weight = weight
         self.length_pool = length_pool
         self.count_pool = count_pool
-        
+
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
         mean_speed = self.length_pool * self.count_pool / self.M_IN_KM / self.duration
@@ -144,10 +138,10 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     trainings: Dict[str, Type[Training]] = {
-        'SWM': Swimming, 
-        'RUN': Running,  
+        'SWM': Swimming,
+        'RUN': Running,
         'WLK': SportsWalking
-    } 
+    }
 
     if workout_type not in trainings:
         return print(f'Тип тренировки не найден. Доступные типы:{",".join(trainings)}')
@@ -163,7 +157,7 @@ def main(training: Training) -> None:
     """Главная функция."""
     info = training.show_training_info()
     print(info.get_message())
-              
+
 
 
 if __name__ == '__main__':
