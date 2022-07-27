@@ -11,9 +11,9 @@ class InfoMessage:
     speed: float
     calories: float
     
-    message: ClassVar[str] = 'Тип тренировки: {}; Длительность: {:.3f} ч.;
-                              Дистанция: {:.3f} км; Ср. скорость: {:.3f} км/ч;
-                              Потрачено ккал: {:.3f}.'
+    message: ClassVar[str] = ('Тип тренировки: {}; Длительность: {:.3f} ч.; '
+                              'Дистанция: {:.3f} км; Ср. скорость: {:.3f} км/ч; '
+                              'Потрачено ккал: {:.3f}.')
 
     def get_message(self) -> str:
         """Вывод на экран сообщения о пройденной тренировке."""
@@ -46,7 +46,8 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        raise NotImplementedError(f'Не определен метод рассчета каллорий в классе {type(self).__name__}')
+        raise NotImplementedError(f'Не определен метод рассчета каллорий в'
+                                  f'классе {type(self).__name__}')
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
