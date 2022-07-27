@@ -10,10 +10,10 @@ class InfoMessage:
     distance: float
     speed: float
     calories: float
-    
+
     message: ClassVar[str] = ('Тип тренировки: {}; Длительность: {:.3f} ч.; '
-                              'Дистанция: {:.3f} км; Ср. скорость: {:.3f} км/ч; '
-                              'Потрачено ккал: {:.3f}.')
+                              'Дистанция: {:.3f} км; Ср. скорость: {:.3f} '
+                              'км/ч; Потрачено ккал: {:.3f}.')
 
     def get_message(self) -> str:
         """Вывод на экран сообщения о пройденной тренировке."""
@@ -79,18 +79,19 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        return ((self.CALORIES_WEIGHT_MULTIPLIER * self.weight + (self.get_mean_speed()**2
-                // self.height) * self.CALORIES_WEIGHT_MULTIPLIER_2 * self.weight)
+        return ((self.CALORIES_WEIGHT_MULTIPLIER * self.weight + 
+                (self.get_mean_speed()**2 // self.height) *
+                self.CALORIES_WEIGHT_MULTIPLIER_2 * self.weight)
                 * self.duration * self.HOURS_IN_MIN)
 
 
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP: float = 1.38
-    CALORIES_AVERAGE_MEAN_SPEED:float = 1.1
+    CALORIES_AVERAGE_MEAN_SPEED: float = 1.1
     CALORIES_WEIGHT_MULTIPLIER: float = 2
 
-    def __init__(self, action, duration, weight, 
+    def __init__(self, action, duration, weight,
                  length_pool: float, count_pool: float):
         super().__init__(action, duration, weight)
         self.length_pool = length_pool
